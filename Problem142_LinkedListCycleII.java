@@ -11,7 +11,7 @@ package LeetCode;
  * Follow up:
  * Can you solve it without using extra space?
  *
- * 1. 找到快慢指针相交点meet
+ * 1. 循环找到快慢指针相交点meet
  * 2. 从head和meet出发，直到二者相等，相等点为循环开始点。
  *
  * 证明：

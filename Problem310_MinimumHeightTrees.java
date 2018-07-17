@@ -46,8 +46,9 @@ import java.util.*;
  * The height of a rooted tree is the number of edges on the longest downward path between the root and a leaf.
  *
  * 思路：
- * 类似拓扑排序的方法，首先建立节点-度数表，度数为1的是叶子节点，
- * 把叶子节点从表中删掉，同时删除过程中新产生的叶子节点加入节点-度数biao
+ * 类似拓扑排序的方法，首先建立节点-度数表，度数为1的是叶子节点，挑出这些节点组成叶子list
+ * 把叶子节点从表中删掉，同时删除过程中新产生的叶子节点放入新的叶子list；
+ * 最终只剩下一个节点或者两个节点为叶子时停止，返回此时的叶子list。
  */
 public class Problem310_MinimumHeightTrees {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {

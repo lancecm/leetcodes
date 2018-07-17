@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * 思路：
  * 1. hashset
- * 2. fast and slow pointer
+ * 2. fast and slow pointer 快慢指针
  */
 public class Problem141_LinkedListCycle {
     // hashset
