@@ -95,9 +95,49 @@ public class Problem22_GenerateParentheses {
         return lists.get(lists.size() - 1);
     }
 
+    // 小象: 回溯+剪枝，22%
+    public List<String> generateParenthesis4(int n) {
+        List<String> result = new ArrayList<>();
+        gen("", n, n, result);
+        return result;
+
+    }
+
+    private void gen(String item, int left, int right, List<String> result) {
+        if (left == 0 && right == 0) {
+            result.add(item);
+        }
+        if (left > 0) {
+            gen(item + "(", left-1, right, result);
+        }
+        if (left < right) { // 当放的左括号多于右括号时，才能放右括号
+            gen(item + ")", left, right-1, result);
+        }
+    }
+
+    // 8.28 Version
+    public List<String> generateParenthesis5(int n) {
+        List<String> res = new LinkedList<> ();
+        helper5(res, 0, 0, n * 2, "");
+        return res;
+    }
+
+    public void helper5(List<String> res, int b1, int b2, int n, String cur) {
+        if (b2 > b1 || b1 > n/2 || b2 > n/2) return;
+        if (cur.length() == n) {
+            res.add(cur);
+            return;
+        }
+        helper5(res, b1 + 1, b2, n, cur + "(");
+        helper5(res, b1, b2 + 1, n, cur + ")");
+    }
+
     @Test
     public void test() {
-        generateParenthesis3(3);
+       List<String> s = generateParenthesis4(3);
+       for (String i : s) {
+           System.out.println(i);
+       }
     }
 
 }

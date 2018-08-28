@@ -58,14 +58,29 @@ public class Problem20_ValidParentheses {
         return st.isEmpty();
     }
 
+    // 8.28 version
+    public boolean isValid3(String s) {
+        Stack<Character> st = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(') st.push(')');
+            else if (c == '[') st.push(']');
+            else if (c == '{') st.push('}');
+            else {
+                if (st.isEmpty()) return false;
+                char tmp = st.pop();
+                if (tmp != c) return false;
+            }
+        }
+        return st.isEmpty();
+    }
 
     @Test
     public void test() {
-        System.out.println(isValid("(}"));
-        System.out.println(isValid("(("));
-        System.out.println(isValid(""));
-        System.out.println(isValid("([{}])"));
-        System.out.println(isValid("{}[]"));
-        System.out.println(isValid("{"));
+        System.out.println(isValid3("(}"));
+        System.out.println(isValid3("(("));
+        System.out.println(isValid3(""));
+        System.out.println(isValid3("([{}])"));
+        System.out.println(isValid3("{}[]"));
+        System.out.println(isValid3("{"));
     }
 }
