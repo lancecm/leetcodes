@@ -2,6 +2,8 @@ package LeetCode;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,6 +28,9 @@ import java.util.List;
  * Explanation: Intervals [1,4] and [4,5] are considerred overlapping.
  *
  * 思路：先排序，后去重 O(nlogn) + O(n) -> O(nlogn)
+ * 本题的关键是掌握API：
+ * list.set(i, item) 是用Item替代index=i位置上的元素
+ * list.sort(拉姆达表达式)
  */
 public class Problem56_MergeIntervals {
     public class Interval {
@@ -75,19 +80,47 @@ public class Problem56_MergeIntervals {
         System.out.println();
     }
 
+
+    /**
+     * Oct.7th
+     */
+    public List<Interval> merge2(List<Interval> intervals) {
+        if (intervals == null || intervals.size() < 2) return intervals;
+        Collections.sort(intervals, (i1, i2) -> {
+            return i1.start == i2.start ? i1.end - i2.end : i1.start - i2.start;
+        });
+        List<Interval> result = new ArrayList<>();
+        Interval last = intervals.get(0);
+        for (int i = 1; i < intervals.size(); i++) {
+            Interval cur = intervals.get(i);
+            if (last.end >= cur.start) {
+                // have intervals
+                last.end = Math.max(last.end, cur.end);
+            } else {
+                // no intervals. add last to result list
+                result.add(last);
+                last = cur;
+            }
+        }
+        // for the last node
+        result.add(last);
+        return result;
+    }
+
     @Test
     public void test() {
         Interval i1 = new Interval(1,4);
         Interval i2 = new Interval(2,3);
-//        Interval i3 = new Interval(8,10);
-//        Interval i4 = new Interval(15,18);
+        Interval i3 = new Interval(8,15);
+        Interval i4 = new Interval(15,18);
         List<Interval> intervals = new LinkedList<>();
         intervals.add(i1);
         intervals.add(i2);
-//        intervals.add(i3);
-//        intervals.add(i4);
-        List<Interval> result = merge(intervals);
+        intervals.add(i3);
+        intervals.add(i4);
+        List<Interval> result = merge2(intervals);
         print(result);
     }
+
 
 }
