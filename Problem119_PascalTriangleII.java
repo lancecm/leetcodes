@@ -74,6 +74,59 @@ public class Problem119_PascalTriangleII {
         System.out.println();
     }
 
+    /**
+     * 19 ver
+     */
+    public List<Integer> getRow3(int rowIndex) {
+        List<Integer> res = new LinkedList<>();
+        res.add(1);
+        if (rowIndex == 0) return res;
+        res.add(1);
+        if (rowIndex == 1) return res;
+        for (int i = 2; i <= rowIndex; i++) {
+            List<Integer> tmp = new LinkedList<>();
+            tmp.add(1);
+            tmp.add(1);
+            for (int j = 0; j < res.size() - 1; j++) {
+                int sum = res.get(j) + res.get(j+1);
+                tmp.add(j+1, sum);
+            }
+            res = tmp;
+        }
+        return res;
+    }
+
+    // O(rowIndex)
+    public List<Integer> getRow4(int rowIndex) {
+        List<Integer> res = new LinkedList<>();
+        for (int i = 0; i <= rowIndex; i++) {
+            res.add(1);
+            for (int j = i - 1; j > 0; j--) {
+                res.set(j, res.get(j) + res.get(j-1));
+            }
+        }
+        return res;
+    }
+
+    // seems native array is better than collections
+    public List<Integer> getRow5(int rowIndex) {
+        int arr[][] = new int[rowIndex + 1][rowIndex + 1];
+        for (int i = 0; i <= rowIndex; i++) {
+            arr[i][0] = 1;
+            arr[i][i] = 1;
+        }
+        for (int i = 2; i <= rowIndex; i++) {
+            for (int j = 1; j < i; j++) {
+                arr[i][j] = arr[i-1][j] + arr[i-1][j-1];
+            }
+        }
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i <= rowIndex; i++) {
+            res.add(arr[rowIndex][i]);
+        }
+        return res;
+    }
+
     @Test
     public void test() {
         print(getRow(0));
