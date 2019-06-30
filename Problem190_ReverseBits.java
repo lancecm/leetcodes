@@ -1,6 +1,5 @@
 package LeetCode;
 
-import com.oracle.tools.packager.mac.MacAppBundler;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -30,8 +29,8 @@ import java.util.Map;
  * 将32bits分隔为8个4bit的组，设置长度=2^4=16的查找表；
  * 优化方案2：
  * 建立缓存Map, 查找时先看map中有木有
- *
- * TODO：更快方案？
+ * 优化方案3：
+ * 酷炫的Bit Operation！使用特殊构造的16进制数作为掩码，用分治法不断交换左边与右边
  */
 public class Problem190_ReverseBits {
     public int reverseBits(int n) {
@@ -75,12 +74,28 @@ public class Problem190_ReverseBits {
         return result;
     }
 
+    // 优化版本3：
+
+
+    /**
+     * 2019/06/24
+     */
+    public int reverseBits4(int n) {
+        int res = 0;
+        for (int i = 0; i < 32; i++) {
+            res = res << 1 | (n & 1); // left shift 1 position then append the last bit of current n
+            n >>>= 1; // n unsigned right shift by 1 position
+        }
+        return res;
+    }
 
     @Test
     public void test() {
-        System.out.println(9&1);
-        System.out.println(reverseBits3(43261596)); //964176192
-        System.out.println(reverseBits3(43261596)); //964176192
-        System.out.println(reverseBits3(43261596)); //964176192
+//        System.out.println(9&1);
+//        System.out.println(reverseBits4(43261596)); //964176192
+//        System.out.println(reverseBits4(43261596)); //964176192
+//        System.out.println(reverseBits4(43261596)); //964176192
+//        int n = 10100101000001111010011100;
+//        System.out.println(reverseBits4(10100101000001111010011100));
     }
 }
